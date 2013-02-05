@@ -225,8 +225,8 @@ def main(_argv):
   else:
     cros_build_lib.Warning('Missing --overlays argument')
     overlays = {
-      '%s/private-overlays/chromeos-overlay' % options.srcroot: [],
-      '%s/third_party/chromiumos-overlay' % options.srcroot: []
+      '%s/private-overlays/coreos-overlay' % options.srcroot: [],
+      '%s/third_party/coreos-overlay' % options.srcroot: []
     }
 
   if command == 'commit':
@@ -251,7 +251,7 @@ def main(_argv):
   # is the only thing it'll be doing.  The chromiumos overlay instead might
   # have revbumping to do before it can generate the cache.
   keys = overlays.keys()
-  for overlay in ('/third_party/chromiumos-overlay',
+  for overlay in ('/third_party/coreos-overlay',
                   '/third_party/portage-stable'):
     for k in keys:
       if k.endswith(overlay):

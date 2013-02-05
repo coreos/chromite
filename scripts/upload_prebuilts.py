@@ -54,11 +54,11 @@ _REL_HOST_PATH = 'host/%(host_arch)s/%(target)s/%(version)s'
 _PRIVATE_OVERLAY_DIR = 'src/private-overlays'
 _GOOGLESTORAGE_ACL_FILE = 'googlestorage_acl.xml'
 _BINHOST_BASE_URL = gs.PUBLIC_BASE_HTTPS_URL + 'chromeos-prebuilt'
-_PREBUILT_BASE_DIR = 'src/third_party/chromiumos-overlay/chromeos/config/'
+_PREBUILT_BASE_DIR = 'src/third_party/coreos-overlay/coreos/config/'
 # Created in the event of new host targets becoming available
 _PREBUILT_MAKE_CONF = {'amd64': os.path.join(_PREBUILT_BASE_DIR,
                                              'make.conf.amd64-host')}
-_BINHOST_CONF_DIR = 'src/third_party/chromiumos-overlay/chromeos/binhost'
+_BINHOST_CONF_DIR = 'src/third_party/coreos-overlay/coreos/binhost'
 
 
 class BuildTarget(object):
@@ -461,7 +461,7 @@ class PrebuiltUploader(object):
       git_sync: If set, update make.conf of target to reference the latest
           prebuilt packages generated here.
       sync_binhost_conf: If set, update binhost config file in
-          chromiumos-overlay for the host.
+          coreos-overlay for the host.
     """
     # Slave boards are listed before the master board so that the master board
     # takes priority (i.e. x86-generic preflight host prebuilts takes priority
@@ -504,7 +504,7 @@ class PrebuiltUploader(object):
       git_sync: If set, update make.conf of target to reference the latest
           prebuilt packages generated here.
       sync_binhost_conf: If set, update binhost config file in
-          chromiumos-overlay for the current board.
+          coreos-overlay for the current board.
       upload_board_tarball: Include a tarball of the board in our upload.
       prepackaged_board: A tarball of the board built outside of this script.
       toolchain_tarballs: A list of toolchain tarballs to upload.
@@ -646,7 +646,7 @@ def ParseOptions():
                     help='Specify the version string')
   parser.add_option('', '--sync-binhost-conf', dest='sync_binhost_conf',
                     default=False, action='store_true',
-                    help='Update binhost.conf in chromiumos-overlay or '
+                    help='Update binhost.conf in coreos-overlay or '
                          'chromeos-overlay. Commit the changes, but don\'t '
                          'push them. This is used for preflight binhosts.')
   parser.add_option('', '--binhost-conf-dir', dest='binhost_conf_dir',

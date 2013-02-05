@@ -35,7 +35,7 @@ _CHROME_VERSION_REGEX = '\d+\.\d+\.\d+\.\d+'
 _NON_STICKY_REGEX = '%s[(_rc.*)|(_alpha.*)]+' % _CHROME_VERSION_REGEX
 
 # Dir where all the action happens.
-_CHROME_OVERLAY_DIR = ('%(srcroot)s/third_party/chromiumos-overlay/' +
+_CHROME_OVERLAY_DIR = ('%(srcroot)s/third_party/coreos-overlay/' +
                        constants.CHROME_CP)
 
 _GIT_COMMIT_MESSAGE = ('Marking %(chrome_rev)s for chrome ebuild with version '

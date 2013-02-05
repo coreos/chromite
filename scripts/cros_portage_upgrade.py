@@ -102,7 +102,7 @@ class Upgrader(object):
   UPSTREAM_TMP_REPO += '/' + UPSTREAM_OVERLAY_NAME
 
   STABLE_OVERLAY_NAME = 'portage-stable'
-  CROS_OVERLAY_NAME = 'chromiumos-overlay'
+  CROS_OVERLAY_NAME = 'coreos-overlay'
   CATEGORIES_FILE = 'profiles/categories'
   HOST_BOARD = 'amd64-host'
   OPT_SLOTS = ('amend', 'csv_file', 'force', 'no_upstream_cache', 'rdeps',
@@ -119,7 +119,7 @@ class Upgrader(object):
                '_curr_arch',    # Architecture for current board run
                '_curr_board',   # Board for current board run
                '_curr_table',   # Package status for current board run
-               '_cros_overlay', # Path to chromiumos-overlay repo
+               '_cros_overlay', # Path to coreos-overlay repo
                '_csv_file',     # File path for writing csv output
                '_deps_graph',   # Dependency graph from portage
                '_force',        # Force upgrade even when version already exists
@@ -542,7 +542,7 @@ class Upgrader(object):
 
     If |was_overwrite| then this upgrade was an overwrite of an existing
     package version (via --force) and it is possible the previous package
-    is still in another overlay (e.g. chromiumos-overlay).  In this case,
+    is still in another overlay (e.g. coreos-overlay).  In this case,
     the user should get rid of the other version first.
     """
     # Further explanation: this check should always pass, but might not
@@ -630,7 +630,7 @@ class Upgrader(object):
     # Expecting emerge_output to have lines like this:
     #  The following mask changes are necessary to proceed:
     # #required by ... =somecategory/somepackage (some reason)
-    # # /home/mtennant/trunk/src/third_party/chromiumos-overlay/profiles\
+    # # /home/mtennant/trunk/src/third_party/coreos-overlay/profiles\
     # /targets/chromeos/package.mask:
     # >=upgraded_cp
     package_mask = None
@@ -1607,7 +1607,7 @@ class Upgrader(object):
           upgraded_versarch.setdefault(upgraded_ver, []).append(arch)
 
           # Save the overlay this package is originally from, if the overlay
-          # is not a Portage overlay (e.g. chromiumos-overlay).
+          # is not a Portage overlay (e.g. coreos-overlay).
           ovrly_col = utable.UpgradeTable.COL_OVERLAY
           ovrly_col = utable.UpgradeTable.GetColumnName(ovrly_col, arch)
           ovrly = row[ovrly_col]

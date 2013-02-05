@@ -23,10 +23,10 @@ from chromite.lib import osutils
 
 _PRIVATE_PREFIX = '%(buildroot)s/src/private-overlays'
 _GLOBAL_OVERLAYS = [
-  '%s/chromeos-overlay' % _PRIVATE_PREFIX,
-  '%s/chromeos-partner-overlay' % _PRIVATE_PREFIX,
-  '%(buildroot)s/src/third_party/chromiumos-overlay',
-  '%(buildroot)s/src/third_party/portage-stable',
+  '%s/coreos-overlay' % _PRIVATE_PREFIX,
+  '%s/coreos-partner-overlay' % _PRIVATE_PREFIX,
+  '%(buildroot)s/src/third_party/coreos-overlay',
+  '%(buildroot)s/src/third_party/portage',
 ]
 
 # Takes two strings, package_name and commit_id.

@@ -50,7 +50,7 @@ class MergeTest(cros_test_lib.OutputTestCase, cros_test_lib.TempDirTestCase):
 
   ROW1 = {mps.COL_PACKAGE: 'dev/bar',
           mps.COL_SLOT: '0',
-          mps.COL_OVERLAY: 'chromiumos-overlay',
+          mps.COL_OVERLAY: 'coreos-overlay',
           COL_VER_x86: '1.2.3',
           COL_VER_arm: '1.2.3-r1',
           mps.COL_TARGET: 'chromeos'}
@@ -149,12 +149,12 @@ class MergeTest(cros_test_lib.OutputTestCase, cros_test_lib.TempDirTestCase):
               mps.COL_TARGET: 'chromeos-dev world'}
     row1_2 = {mps.COL_PACKAGE: 'dev/bar',
               mps.COL_SLOT: '0',
-              mps.COL_OVERLAY: 'chromiumos-overlay',
+              mps.COL_OVERLAY: 'coreos-overlay',
               self.COL_VER_arm: '1.2.3-r1',
               mps.COL_TARGET: 'chromeos-test'}
     row2_2 = {mps.COL_PACKAGE: 'dev/newby',
               mps.COL_SLOT: '2',
-              mps.COL_OVERLAY: 'chromiumos-overlay',
+              mps.COL_OVERLAY: 'coreos-overlay',
               self.COL_VER_arm: '3.2.1',
               mps.COL_TARGET: 'chromeos hard-host-depends'}
     cols = [col for col in self.COLUMNS if col != self.COL_VER_x86]
@@ -173,13 +173,13 @@ class MergeTest(cros_test_lib.OutputTestCase, cros_test_lib.TempDirTestCase):
 
     final_row0 = {mps.COL_PACKAGE: 'dev/bar',
                   mps.COL_SLOT: '0',
-                  mps.COL_OVERLAY: 'chromiumos-overlay',
+                  mps.COL_OVERLAY: 'coreos-overlay',
                   self.COL_VER_x86: '1.2.3',
                   self.COL_VER_arm: '1.2.3-r1',
                   mps.COL_TARGET: 'chromeos'}
     final_row1 = {mps.COL_PACKAGE: 'dev/newby',
                   mps.COL_SLOT: '2',
-                  mps.COL_OVERLAY: 'chromiumos-overlay',
+                  mps.COL_OVERLAY: 'coreos-overlay',
                   self.COL_VER_x86: '',
                   self.COL_VER_arm: '3.2.1',
                   mps.COL_TARGET: 'chromeos hard-host-depends'}

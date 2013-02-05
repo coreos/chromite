@@ -91,7 +91,7 @@ class UploaderTest(cros_test_lib.MoxOutputTestCase):
           }
   ROW1 = {COL_PKG: 'sys-dev/bar',
           COL_SLOT: '0',
-          COL_OVERLAY: 'chromiumos-overlay',
+          COL_OVERLAY: 'coreos-overlay',
           COL_STATUS: 'needs upgrade',
           COL_VER: '1.2.3-r1',
           COL_STABLE_UP: '1.2.3-r2',
@@ -100,7 +100,7 @@ class UploaderTest(cros_test_lib.MoxOutputTestCase):
           }
   ROW2 = {COL_PKG: 'sys-dev/raster',
           COL_SLOT: '1',
-          COL_OVERLAY: 'chromiumos-overlay',
+          COL_OVERLAY: 'coreos-overlay',
           COL_STATUS: 'current',
           COL_VER: '1.2.3',
           COL_STABLE_UP: '1.2.3',

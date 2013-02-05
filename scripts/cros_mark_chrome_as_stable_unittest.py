@@ -46,7 +46,7 @@ class CrosMarkChromeAsStable(cros_test_lib.MoxTempDirTestCase):
 
   def setUp(self):
     """Setup vars and create mock dir."""
-    self.tmp_overlay = os.path.join(self.tempdir, 'chromiumos-overlay')
+    self.tmp_overlay = os.path.join(self.tempdir, 'coreos-overlay')
     self.mock_chrome_dir = os.path.join(self.tmp_overlay, constants.CHROME_CP)
     os.makedirs(self.mock_chrome_dir)
 

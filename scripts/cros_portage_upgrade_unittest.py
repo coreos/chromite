@@ -1030,7 +1030,7 @@ class GetPackageUpgradeStateTest(CpuTestBase):
 
   def testGetPackageUpgradeStateLocalOnly(self):
     pinfo = cpu.PInfo(cpv='foo/bar-2',
-                      overlay='chromiumos-overlay',
+                      overlay='coreos-overlay',
                       cpv_cmp_upstream=None,
                       latest_upstream_cpv=None,
                       )
@@ -1048,7 +1048,7 @@ class GetPackageUpgradeStateTest(CpuTestBase):
 
   def testGetPackageUpgradeStateUpgradeAndDuplicated(self):
     pinfo = cpu.PInfo(cpv='foo/bar-2',
-                      overlay='chromiumos-overlay',
+                      overlay='coreos-overlay',
                       cpv_cmp_upstream=1, # outdated
                       latest_upstream_cpv='not important',
                       )
@@ -1058,7 +1058,7 @@ class GetPackageUpgradeStateTest(CpuTestBase):
 
   def testGetPackageUpgradeStateUpgradeAndPatched(self):
     pinfo = cpu.PInfo(cpv='foo/bar-2',
-                      overlay='chromiumos-overlay',
+                      overlay='coreos-overlay',
                       cpv_cmp_upstream=1, # outdated
                       latest_upstream_cpv='not important',
                       )
@@ -1077,7 +1077,7 @@ class GetPackageUpgradeStateTest(CpuTestBase):
 
   def testGetPackageUpgradeStateDuplicated(self):
     pinfo = cpu.PInfo(cpv='foo/bar-2',
-                      overlay='chromiumos-overlay',
+                      overlay='coreos-overlay',
                       cpv_cmp_upstream=0, # current
                       latest_upstream_cpv='not important',
                       )
@@ -1086,7 +1086,7 @@ class GetPackageUpgradeStateTest(CpuTestBase):
 
   def testGetPackageUpgradeStatePatched(self):
     pinfo = cpu.PInfo(cpv='foo/bar-2',
-                      overlay='chromiumos-overlay',
+                      overlay='coreos-overlay',
                       cpv_cmp_upstream=0, # current
                       latest_upstream_cpv='not important',
                       )
