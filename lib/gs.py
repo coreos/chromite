@@ -20,7 +20,7 @@ from chromite.lib import osutils
 # method; we set it initially here just for the sake of making clear it
 # exists.
 GSUTIL_BIN = None
-PUBLIC_BASE_HTTPS_URL = 'https://commondatastorage.googleapis.com/'
+PUBLIC_BASE_HTTPS_URL = 'http://gentoo.osuosl.org/releases/amd64/current-stage3/'
 PRIVATE_BASE_HTTPS_URL = 'https://sandbox.google.com/storage/'
 BASE_GS_URL = 'gs://'
 
@@ -57,7 +57,7 @@ def GetGsURL(bucket, for_gsutil=False, public=True, suburl=''):
     urlbase = BASE_GS_URL
   else:
     urlbase = PUBLIC_BASE_HTTPS_URL if public else PRIVATE_BASE_HTTPS_URL
-  return '%s%s/%s' % (urlbase, bucket, suburl)
+  return '%s/%s' % (urlbase, suburl)
 
 
 class GSContextException(Exception):
@@ -188,7 +188,7 @@ class GSContext(object):
 
   def _ConfigureBotoConfig(self):
     """Make sure we can access protected bits in GS."""
-    print 'Configuring gsutil. **Please use your @google.com account.**'
+    print('Configuring gsutil. **Please use your @google.com account.**')
     try:
       self._DoCommand(['config'], retries=0, debug_level=logging.CRITICAL,
                       print_cmd=False)

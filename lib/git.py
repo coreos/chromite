@@ -169,7 +169,7 @@ def GetCurrentBranch(cwd):
   try:
     ret = RunGit(cwd, ['symbolic-ref', '-q', 'HEAD'])
     return StripRefsHeads(ret.output.strip(), False)
-  except cros_build_lib.RunCommandError, e:
+  except cros_build_lib.RunCommandError as e:
     if e.result.returncode != 1:
       raise
     return None
@@ -341,7 +341,7 @@ class Manifest(object):
         with open(source, 'rb') as f:
           # pylint: disable=E1101
           return hashlib.md5(f.read()).hexdigest()
-      except EnvironmentError, e:
+      except EnvironmentError as e:
         if e.errno != errno.ENOENT or not ignore_missing:
           raise
     source.seek(0)
@@ -494,7 +494,7 @@ class ManifestCheckout(Manifest):
     path = os.path.join(root, '.repo', 'manifests.git')
     try:
       result = RunGit(path, ['config', '--get', 'manifest.groups'])
-    except cros_build_lib.RunCommandError, e:
+    except cros_build_lib.RunCommandError as e:
       if e.result.returncode == 1:
         # Value wasn't found, which is fine.
         return frozenset(['default'])
@@ -614,7 +614,7 @@ def _GitRepoIsContentMerging(git_repo, remote):
     result = RunGit(git_repo, ['config', '-f', '/dev/stdin', '--get',
                                'submit.mergeContent'], input=content.output)
     return result.output.strip().lower() == 'true'
-  except cros_build_lib.RunCommandError, e:
+  except cros_build_lib.RunCommandError as e:
     # If the field isn't set at all, exit code is 1.
     # Anything else is a bad invocation or an indecipherable state.
     if e.result.returncode != 1:
@@ -813,7 +813,7 @@ def GetTrackingBranchViaManifest(git_repo, for_checkout=True, for_push=False,
         return None
 
     return remote, revision
-  except EnvironmentError, e:
+  except EnvironmentError:
     if e.errno != errno.ENOENT:
       raise
   return None
@@ -1011,7 +1011,7 @@ def GetChromiteTrackingBranch():
     # Ensure the manifest knows of this checkout.
     if manifest.FindProjectFromPath(cwd):
       return manifest.manifest_branch
-  except EnvironmentError, e:
+  except EnvironmentError as e:
     if e.errno != errno.ENOENT:
       raise
 

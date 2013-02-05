@@ -96,13 +96,13 @@ def SafeUnlink(path, sudo=False):
   try:
     os.unlink(path)
     return True
-  except EnvironmentError, e:
+  except EnvironmentError as e:
     if e.errno != errno.ENOENT:
       raise
   return False
 
 
-def SafeMakedirs(path, mode=0775, sudo=False):
+def SafeMakedirs(path, mode=0o775, sudo=False):
   """Make parent directories if needed.  Ignore if existing.
 
   Arguments:
@@ -128,7 +128,7 @@ def SafeMakedirs(path, mode=0775, sudo=False):
   try:
     os.makedirs(path, mode)
     return True
-  except EnvironmentError, e:
+  except EnvironmentError as e:
     if e.errno != errno.EEXIST or not os.path.isdir(path):
       raise
 
@@ -148,7 +148,7 @@ def RmDir(path, ignore_missing=False, sudo=False):
           ['rm', '-r%s' % ('f' if ignore_missing else '',), '--', path],
           debug_level=logging.DEBUG,
           redirect_stdout=True, redirect_stderr=True)
-    except cros_build_lib.RunCommandError, e:
+    except cros_build_lib.RunCommandError as e:
       if not ignore_missing or os.path.exists(path):
         # If we're not ignoring the rm ENOENT equivalent, throw it;
         # if the pathway still exists, something failed, thus throw it.
@@ -156,7 +156,7 @@ def RmDir(path, ignore_missing=False, sudo=False):
   else:
     try:
       shutil.rmtree(path)
-    except EnvironmentError, e:
+    except EnvironmentError as e:
       if not ignore_missing or e.errno != errno.ENOENT:
         raise
 
@@ -261,7 +261,7 @@ def _TempDirSetup(self, prefix='tmp', update_env=True, base_dir=None):
   # Stash the old tempdir that was used so we can
   # switch it back on the way out.
   self.tempdir = tempfile.mkdtemp(prefix=prefix, dir=base_dir)
-  os.chmod(self.tempdir, 0700)
+  os.chmod(self.tempdir, 0o700)
 
   if update_env:
     with tempfile._once_lock:
@@ -287,7 +287,7 @@ def _TempDirTearDown(self, force_sudo):
   try:
     if tempdir is not None:
       RmDir(tempdir, ignore_missing=True, sudo=force_sudo)
-  except EnvironmentError, e:
+  except EnvironmentError as e:
     # Suppress ENOENT since we may be invoked
     # in a context where parallel wipes of the tempdir
     # may be occuring; primarily during hard shutdowns.

@@ -190,7 +190,7 @@ def _KillChildProcess(proc, kill_timeout, cmd, original_handler, signum, frame):
       if proc.poll() is None:
         # Still doesn't want to die.  Too bad, so sad, time to die.
         proc.kill()
-    except EnvironmentError, e:
+    except EnvironmentError as e:
       Warning('Ignoring unhandled exception in _KillChildProcess: %s', e)
 
     # Ensure our child process has been reaped.
@@ -228,7 +228,7 @@ class _Popen(subprocess.Popen):
 
     try:
       os.kill(self.pid, signum)
-    except EnvironmentError, e:
+    except EnvironmentError as e:
       if e.errno == errno.EPERM:
         # Kill returns either 0 (signal delivered), or 1 (signal wasn't
         # delivered).  This isn't particularly informative, but we still
@@ -323,7 +323,7 @@ def RunCommand(cmd, print_cmd=True, error_ok=False, error_message=None,
   def _get_tempfile():
     try:
       return tempfile.TemporaryFile(bufsize=0)
-    except EnvironmentError, e:
+    except EnvironmentError as e:
       if e.errno != errno.ENOENT:
         raise
       # This can occur if we were pointed at a specific location for our
@@ -456,7 +456,7 @@ def RunCommand(cmd, print_cmd=True, error_ok=False, error_message=None,
         msg += '\n%s' % error_message
       raise RunCommandError(msg, cmd_result)
   # TODO(sosa): is it possible not to use the catch-all Exception here?
-  except OSError, e:
+  except OSError as e:
     estr = str(e)
     if e.errno == errno.EACCES:
       estr += '; does the program need `chmod a+x`?'
@@ -465,7 +465,7 @@ def RunCommand(cmd, print_cmd=True, error_ok=False, error_message=None,
                             exception=e)
     else:
       Warning(estr)
-  except Exception, e:
+  except Exception as e:
     if not error_ok:
       raise
     else:
@@ -673,7 +673,7 @@ def RetryInvocation(return_handler, exc_handler, max_retry, functor, *args,
       ret = functor(*args, **kwds)
       if not return_handler(ret):
         return ret
-    except Exception, e:
+    except Exception as e:
       # Note we're not snagging BaseException, so MemoryError/KeyboardInterrupt
       # and friends don't enter this except block.
       if not exc_handler(e):
@@ -686,7 +686,7 @@ def RetryInvocation(return_handler, exc_handler, max_retry, functor, *args,
   #pylint: disable=E0702
   if exc_info is None:
     raise RetriesExhausted(max_retry, functor, args, kwds)
-  raise exc_info[0], exc_info[1], exc_info[2]
+  raise Exception(exc_info[0], exc_info[1], exc_info[2])
 
 
 def RetryReturned(ret_retry, max_retry, functor, *args, **kwds):
@@ -1169,7 +1169,7 @@ class ContextManagerStack(object):
 
     self._stack = []
 
-    raise exc_type, exc, traceback
+    raise Exception(exc_type, exc).with_traceback(traceback)
 
 
 def WaitForCondition(func, period, timeout):
@@ -1212,7 +1212,7 @@ def RunCurl(args, **kwargs):
   try:
     return RunCommandWithRetries(5, cmd, sleep=3, retry_on=retriable_exits,
                                  **kwargs)
-  except RunCommandError, e:
+  except RunCommandError as e:
     code = e.result.returncode
     if code in (51, 58, 60):
       # These are the return codes of failing certs as per 'man curl'.
@@ -1221,7 +1221,7 @@ def RunCurl(args, **kwargs):
       try:
         return RunCommandWithRetries(5, cmd, sleep=60, retry_on=retriable_exits,
                                      **kwargs)
-      except RunCommandError, e:
+      except RunCommandError as e:
         Die("Curl failed w/ exit code %i", code)
 
 
@@ -1270,7 +1270,7 @@ def GetTargetChromiteApiVersion(buildroot, validate_version=True):
   return major, minor
 
 
-def iflatten_instance(iterable, terminate_on_kls=(basestring,)):
+def iflatten_instance(iterable, terminate_on_kls=(str,)):
   """Derivative of snakeoil.lists.iflatten_instance; flatten an object.
 
   Given an object, flatten it into a single depth iterable-
@@ -1290,7 +1290,7 @@ def iflatten_instance(iterable, terminate_on_kls=(basestring,)):
       return False
     # Note strings can be infinitely descended through- thus this
     # recursion limiter.
-    return not isinstance(item, basestring) or len(item) > 1
+    return not isinstance(item, str) or len(item) > 1
 
   if not descend_into(iterable):
     yield iterable
@@ -1443,7 +1443,7 @@ def LoadKeyValueFile(input, ignore_missing=False):
           # Only strip quotes if the first & last one match.
           val = val[1:-1]
         d[chunks[0].strip()] = val
-  except EnvironmentError, e:
+  except EnvironmentError as e:
     if not (ignore_missing and e.errno == errno.ENOENT):
       raise
 

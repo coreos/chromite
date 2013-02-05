@@ -188,11 +188,11 @@ FULL_AU_TEST_TYPE = 'full_suite'
 VALID_AU_TEST_TYPES = [SMOKE_SUITE_TEST_TYPE, SIMPLE_AU_TEST_TYPE,
                        FULL_AU_TEST_TYPE]
 
-VERSION_FILE = os.path.join('src/third_party/chromiumos-overlay',
-                            'chromeos/config/chromeos_version.sh')
-SDK_VERSION_FILE = os.path.join('src/third_party/chromiumos-overlay',
-                                'chromeos/binhost/host/sdk_version.conf')
-SDK_GS_BUCKET = 'chromiumos-sdk'
+VERSION_FILE = os.path.join('src/third_party/coreos-overlay',
+                            'coreos/config/chromeos_version.sh')
+SDK_VERSION_FILE = os.path.join('src/third_party/coreos-overlay',
+                                'coreos/binhost/host/sdk_version.conf')
+SDK_GS_BUCKET = 'coreos-sdk'
 
 BOTH_OVERLAYS = 'both'
 PUBLIC_OVERLAYS = 'public'
@@ -265,7 +265,7 @@ DEFAULT_ARCHIVE_BUCKET = 'gs://chromeos-image-archive'
 CHROME_SYSROOT_TAR = 'sysroot_%s.tar.xz' % _SlashToUnderscore(CHROME_CP)
 CHROME_ENV_TAR = 'environment_%s.tar.xz' % _SlashToUnderscore(CHROME_CP)
 CHROME_ENV_FILE = 'environment'
-BASE_IMAGE_NAME = 'chromiumos_base_image'
+BASE_IMAGE_NAME = 'coreos_base_image'
 BASE_IMAGE_TAR = '%s.tar.xz' % BASE_IMAGE_NAME
 BASE_IMAGE_BIN = '%s.bin' % BASE_IMAGE_NAME
 IMAGE_SCRIPTS_NAME = 'image_scripts'
