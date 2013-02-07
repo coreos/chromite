@@ -33,7 +33,7 @@ PACKAGE_STABLE = '[stable]'
 PACKAGE_NONE = '[none]'
 SRC_ROOT = os.path.realpath(constants.SOURCE_ROOT)
 
-CHROMIUMOS_OVERLAY = '/usr/local/portage/chromiumos'
+CHROMIUMOS_OVERLAY = '/usr/local/portage/coreos'
 STABLE_OVERLAY = '/usr/local/portage/stable'
 CROSSDEV_OVERLAY = '/usr/local/portage/crossdev'
 
