@@ -624,7 +624,7 @@ official = _config(
 _cros_sdk = full.add_config('chromiumos-sdk',
   # The amd64-host has to be last as that is when the toolchains
   # are bundled up for inclusion in the sdk.
-  boards=('x86-generic', 'arm-generic', 'amd64-generic'),
+  boards=('x86-generic', 'amd64-generic'),
   build_type=constants.CHROOT_BUILDER_TYPE,
   use_sdk=False,
   trybot_list=True,
