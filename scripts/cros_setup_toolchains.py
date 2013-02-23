@@ -52,7 +52,6 @@ TARGET_VERSION_MAP = {
 # Overrides for {gcc,binutils}-config, pick a package with particular suffix.
 CONFIG_TARGET_SUFFIXES = {
   'binutils' : {
-    'i686-pc-linux-gnu' : '-gold',
     'x86_64-cros-linux-gnu' : '-gold',
   },
 }
