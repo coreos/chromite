@@ -20,7 +20,7 @@ from chromite.lib import osutils
 # method; we set it initially here just for the sake of making clear it
 # exists.
 GSUTIL_BIN = None
-PUBLIC_BASE_HTTPS_URL = 'http://gentoo.osuosl.org/releases/amd64/current-stage3/'
+PUBLIC_BASE_HTTPS_URL = 'http://storage.core-os.com/'
 PRIVATE_BASE_HTTPS_URL = 'https://sandbox.google.com/storage/'
 BASE_GS_URL = 'gs://'
 
@@ -57,7 +57,7 @@ def GetGsURL(bucket, for_gsutil=False, public=True, suburl=''):
     urlbase = BASE_GS_URL
   else:
     urlbase = PUBLIC_BASE_HTTPS_URL if public else PRIVATE_BASE_HTTPS_URL
-  return '%s/%s' % (urlbase, suburl)
+  return '%s%s/%s' % (urlbase, bucket, suburl)
 
 
 class GSContextException(Exception):
