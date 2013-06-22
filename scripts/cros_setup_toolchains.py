@@ -377,7 +377,7 @@ def UpdateTargets(targets, usepkg, getbinpkg=True):
   cmd = [EMERGE_CMD, '--oneshot', '--update']
   if usepkg:
     if getbinpkg:
-      cmd.apend('--getbinpkg')
+      cmd.append('--getbinpkg')
     cmd.append('--usepkgonly')
 
   cmd.extend(packages)
