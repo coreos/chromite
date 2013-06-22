@@ -35,15 +35,12 @@ NEEDED_TOOLS = ('curl', 'xz', 'unshare')
 
 def GetArchStageTarballs(version):
   """Returns the URL for a given arch/version"""
-  extension = {'bz2':'tbz2', 'xz':'tar.xz'}
-  return [toolchain.GetSdkURL(suburl='cros-sdk-%s.%s'
-                              % (version, extension[compressor]))
-          for compressor in COMPRESSION_PREFERENCE]
+  suburl = '%s/coreos-sdk-amd64-%s.tar.bz2' % (version, version)
+  return [toolchain.GetSdkURL(suburl=suburl)]
 
 
 def GetStage3Urls(version):
-  return [toolchain.GetSdkURL(suburl='stage3-amd64-%s.tar.%s' % (version, ext))
-          for ext in COMPRESSION_PREFERENCE]
+  return GetArchStageTarballs(version)
 
 
 def FetchRemoteTarballs(storage_dir, urls):

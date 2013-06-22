@@ -20,7 +20,7 @@ from chromite.lib import osutils
 # method; we set it initially here just for the sake of making clear it
 # exists.
 GSUTIL_BIN = None
-PUBLIC_BASE_HTTPS_URL = 'http://storage.core-os.com/'
+PUBLIC_BASE_HTTPS_URL = 'https://commondatastorage.googleapis.com/'
 PRIVATE_BASE_HTTPS_URL = 'https://sandbox.google.com/storage/'
 BASE_GS_URL = 'gs://'
 
