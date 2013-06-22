@@ -192,7 +192,7 @@ VERSION_FILE = os.path.join('src/third_party/coreos-overlay',
                             'coreos/config/chromeos_version.sh')
 SDK_VERSION_FILE = os.path.join('src/third_party/coreos-overlay',
                                 'coreos/binhost/host/sdk_version.conf')
-SDK_GS_BUCKET = 'coreos-sdk'
+SDK_GS_BUCKET = 'storage.core-os.net/coreos/sdk/experimental'
 
 BOTH_OVERLAYS = 'both'
 PUBLIC_OVERLAYS = 'public'
