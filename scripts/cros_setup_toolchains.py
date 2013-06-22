@@ -105,7 +105,7 @@ class Crossdev(object):
     return val[target]
 
   @classmethod
-  def UpdateTargets(cls, targets, usepkg, config_only=False):
+  def UpdateTargets(cls, targets, usepkg, getbinpkg=True, config_only=False):
     """Calls crossdev to initialize a cross target.
 
     Args:
@@ -120,8 +120,9 @@ class Crossdev(object):
     # Pick stable by default, and override as necessary.
     cmdbase.extend(['-P', '--oneshot'])
     if usepkg:
-      cmdbase.extend(['-P', '--getbinpkg',
-                      '-P', '--usepkgonly',
+      if getbinpkg:
+        cmdbase.extend(['-P', '--getbinpkg'])
+      cmdbase.extend(['-P', '--usepkgonly',
                       '--without-headers'])
 
     overlays = '%s %s' % (CHROMIUMOS_OVERLAY, STABLE_OVERLAY)
@@ -331,12 +332,13 @@ def RemovePackageMask(target):
 
 
 # Main functions performing the actual update steps.
-def UpdateTargets(targets, usepkg):
+def UpdateTargets(targets, usepkg, getbinpkg=True):
   """Determines which packages need update/unmerge and defers to portage.
 
   args:
     targets - the list of targets to update
     usepkg - copies the commandline option
+    getbinpkg - copies the commandline option
   """
   # Remove keyword files created by old versions of cros_setup_toolchains.
   osutils.SafeUnlink('/etc/portage/package.keywords/cross-host')
@@ -374,7 +376,9 @@ def UpdateTargets(targets, usepkg):
 
   cmd = [EMERGE_CMD, '--oneshot', '--update']
   if usepkg:
-    cmd.extend(['--getbinpkg', '--usepkgonly'])
+    if getbinpkg:
+      cmd.apend('--getbinpkg')
+    cmd.append('--usepkgonly')
 
   cmd.extend(packages)
   cros_build_lib.RunCommand(cmd)
@@ -476,7 +480,7 @@ def ExpandTargets(targets_wanted):
   return targets
 
 
-def UpdateToolchains(usepkg, deleteold, hostonly, reconfig,
+def UpdateToolchains(usepkg, getbinpkg, deleteold, hostonly, reconfig,
                      targets_wanted, boards_wanted):
   """Performs all steps to create a synchronized toolchain enviroment.
 
@@ -503,15 +507,17 @@ def UpdateToolchains(usepkg, deleteold, hostonly, reconfig,
     if crossdev_targets:
       print 'The following targets need to be re-initialized:'
       print crossdev_targets
-      Crossdev.UpdateTargets(crossdev_targets, usepkg)
+      Crossdev.UpdateTargets(crossdev_targets, usepkg, getbinpkg=getbinpkg)
     # Those that were not initialized may need a config update.
-    Crossdev.UpdateTargets(reconfig_targets, usepkg, config_only=True)
+    Crossdev.UpdateTargets(reconfig_targets, usepkg, getbinpkg=getbinpkg,
+                           config_only=True)
 
   # We want host updated.
   targets['host'] = {}
 
   # Now update all packages.
-  if UpdateTargets(targets, usepkg) or crossdev_targets or reconfig:
+  if (UpdateTargets(targets, usepkg, getbinpkg=getbinpkg)
+      or crossdev_targets or reconfig):
     SelectActiveToolchains(targets, CONFIG_TARGET_SUFFIXES)
 
   if deleteold:
@@ -932,6 +938,9 @@ def main(argv):
   parser.add_option('-u', '--nousepkg',
                     action='store_false', dest='usepkg', default=True,
                     help='Use prebuilt packages if possible')
+  parser.add_option('--nogetbinpkg',
+                    action='store_false', dest='getbinpkg', default=True,
+                    help='Toggle fetching remote prebuilt packages')
   parser.add_option('-d', '--deleteold',
                     action='store_true', dest='deleteold', default=False,
                     help='Unmerge deprecated packages')
@@ -983,8 +992,8 @@ def main(argv):
       cros_build_lib.Die('this script must be run as root')
 
     Crossdev.Load(options.reconfig)
-    UpdateToolchains(options.usepkg, options.deleteold, options.hostonly,
-                     options.reconfig, targets, boards)
+    UpdateToolchains(options.usepkg, options.getbinpkg, options.deleteold,
+                     options.hostonly, options.reconfig, targets, boards)
     Crossdev.Save()
 
   return 0

@@ -116,7 +116,8 @@ def FetchRemoteTarballs(storage_dir, urls):
   return tarball_dest
 
 
-def CreateChroot(chroot_path, sdk_tarball, cache_dir, nousepkg=False):
+def CreateChroot(chroot_path, sdk_tarball, cache_dir,
+                 nousepkg=False, nogetbinpkg=False):
   """Creates a new chroot from a given SDK"""
 
   cmd = MAKE_CHROOT + ['--stage3_path', sdk_tarball,
@@ -124,6 +125,8 @@ def CreateChroot(chroot_path, sdk_tarball, cache_dir, nousepkg=False):
                        '--cache_dir', cache_dir]
   if nousepkg:
     cmd.append('--nousepkg')
+  elif nogetbinpkg:
+    cmd.append('--nogetbinpkg')
 
   try:
     cros_build_lib.RunCommand(cmd, print_cmd=False)
@@ -258,6 +261,8 @@ If given args those are passed to the chroot environment, and executed."""
                     help='Mount chrome into this path inside SDK chroot')
   parser.add_option('--nousepkg', action='store_true', default=False,
                     help='Do not use binary packages when creating a chroot.')
+  parser.add_option('--nogetbinpkg', action='store_true', default=False,
+                    help='Do not fetch remote binary packages.')
   parser.add_option('-u', '--url',
                     dest='sdk_url', default=None,
                     help=('''Use sdk tarball located at this url.
@@ -377,7 +382,8 @@ If given args those are passed to the chroot environment, and executed."""
       if options.create:
         lock.write_lock()
         CreateChroot(options.chroot, sdk_tarball, options.cache_dir,
-                     nousepkg=(options.bootstrap or options.nousepkg))
+                     nousepkg=(options.bootstrap or options.nousepkg),
+                     nogetbinpkg=options.nogetbinpkg)
 
       if options.enter:
         lock.read_lock()
