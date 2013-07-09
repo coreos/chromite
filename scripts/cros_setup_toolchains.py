@@ -51,9 +51,6 @@ TARGET_VERSION_MAP = {
 }
 # Overrides for {gcc,binutils}-config, pick a package with particular suffix.
 CONFIG_TARGET_SUFFIXES = {
-  'binutils' : {
-    'x86_64-cros-linux-gnu' : '-gold',
-  },
 }
 # Global per-run cache that will be filled ondemand in by GetPackageMap()
 # function as needed.
