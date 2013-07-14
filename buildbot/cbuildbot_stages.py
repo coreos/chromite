@@ -1763,7 +1763,7 @@ class ArchiveStage(BoardSpecificBuilderStage):
         'boards': config['boards'],
         'cros-version': self.GetVersion(),
         # Data for the toolchain used.
-        'sdk-version': sdk_verinfo.get('SDK_LATEST_VERSION', '<unknown>'),
+        'sdk-version': sdk_verinfo.get('COREOS_SDK_VERSION', '<unknown>'),
         'toolchain-url': sdk_verinfo.get('TC_PATH', '<unknown>'),
     }
     if len(config['boards']) == 1:
