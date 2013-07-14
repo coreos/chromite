@@ -190,8 +190,7 @@ VALID_AU_TEST_TYPES = [SMOKE_SUITE_TEST_TYPE, SIMPLE_AU_TEST_TYPE,
 
 VERSION_FILE = os.path.join('src/third_party/coreos-overlay',
                             'coreos/config/chromeos_version.sh')
-SDK_VERSION_FILE = os.path.join('src/third_party/coreos-overlay',
-                                'coreos/binhost/host/sdk_version.conf')
+SDK_VERSION_FILE = '.repo/manifests/version.txt'
 SDK_GS_BUCKET = 'storage.core-os.net/coreos/sdk/amd64'
 
 BOTH_OVERLAYS = 'both'

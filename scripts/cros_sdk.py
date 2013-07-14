@@ -213,8 +213,7 @@ If given args those are passed to the chroot environment, and executed."""
   conf = cros_build_lib.LoadKeyValueFile(
       os.path.join(constants.SOURCE_ROOT, constants.SDK_VERSION_FILE),
       ignore_missing=True)
-  sdk_latest_version = conf.get('SDK_LATEST_VERSION', '<unknown>')
-  bootstrap_latest_version = conf.get('BOOTSTRAP_LATEST_VERSION', '<unknown>')
+  sdk_latest_version = conf.get('COREOS_SDK_VERSION', '<unknown>')
 
   parser = commandline.OptionParser(usage=usage, caching=True)
 
@@ -264,10 +263,8 @@ If given args those are passed to the chroot environment, and executed."""
                     dest='sdk_url', default=None,
                     help=('''Use sdk tarball located at this url.
                              Use file:// for local files.'''))
-  parser.add_option('--sdk-version', default=None,
-                    help='Use this sdk version.  For prebuilt, current is %r'
-                         ', for bootstrapping its %r.'
-                          % (sdk_latest_version, bootstrap_latest_version))
+  parser.add_option('--sdk-version', default=sdk_latest_version,
+                    help='Use this sdk version. Current is %default.')
   options, chroot_command = parser.parse_args(argv)
 
   # Some sanity checks first, before we ask for sudo credentials.
@@ -319,19 +316,11 @@ If given args those are passed to the chroot environment, and executed."""
   if options.enter:
     options.create |= not chroot_exists
 
-  if not options.sdk_version:
-    sdk_version = (bootstrap_latest_version if options.bootstrap
-                   else sdk_latest_version)
-  else:
-    sdk_version = options.sdk_version
-
   # Based on selections, fetch the tarball.
   if options.sdk_url:
     urls = [options.sdk_url]
-  elif options.bootstrap:
-    urls = GetStage3Urls(sdk_version)
   else:
-    urls = GetArchStageTarballs(sdk_version)
+    urls = GetArchStageTarballs(options.sdk_version)
 
   lock_path = os.path.dirname(options.chroot)
   lock_path = os.path.join(lock_path,
