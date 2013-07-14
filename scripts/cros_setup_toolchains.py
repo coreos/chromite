@@ -115,7 +115,7 @@ class Crossdev(object):
     cmdbase = ['crossdev', '--show-fail-log']
     cmdbase.extend(['--env', 'FEATURES=splitdebug'])
     # Pick stable by default, and override as necessary.
-    cmdbase.extend(['-P', '--oneshot'])
+    cmdbase.extend(['-P', '--oneshot', '-P', '--selective=n'])
     if usepkg:
       if getbinpkg:
         cmdbase.extend(['-P', '--getbinpkg'])
