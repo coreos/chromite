@@ -449,6 +449,13 @@ def SelectActiveToolchains(targets, suffixes):
         cmd = [ package + '-config', desired ]
         cros_build_lib.RunCommand(cmd, print_cmd=False)
 
+  # run sysroot-config to update links to gcc wrappers for cross targets
+  for target in targets:
+    if target == 'host':
+      continue
+    cmd = ['sysroot-config', '--install-links', target]
+    cros_build_lib.RunCommand(cmd, print_cmd=False)
+
 
 def ExpandTargets(targets_wanted):
   """Expand any possible toolchain aliases into full targets
