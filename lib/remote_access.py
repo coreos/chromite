@@ -120,7 +120,7 @@ class RemoteAccess(object):
     in the case of multiple matches, uses the first one.  In the case of no
     entry, returns an empty string.
     """
-    result = self.RemoteSh('grep CHROMEOS_RELEASE_BOARD /etc/lsb-release')
+    result = self.RemoteSh('grep COREOS_RELEASE_BOARD /etc/lsb-release')
     # In the case of multiple matches, use the first one.
     output = result.output.splitlines()
     if len(output) > 1:
