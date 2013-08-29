@@ -32,13 +32,12 @@ GERRIT_INT_PORT = '29419'
 
 GERRIT_HOST = 'gerrit.chromium.org'
 GERRIT_INT_HOST = 'gerrit-int.chromium.org'
-GIT_HOST = 'git.chromium.org'
+GIT_HOST = 'chromium.googlesource.com'
 
 GERRIT_SSH_URL = 'ssh://%s:%s' % (GERRIT_HOST, GERRIT_PORT)
 GERRIT_INT_SSH_URL = 'ssh://%s:%s' % (GERRIT_INT_HOST, GERRIT_INT_PORT)
 GERRIT_HTTP_URL = 'https://%s' % GERRIT_HOST
-GIT_HTTP_URL = 'https://%s/git' % GIT_HOST
-CHROMIUM_GOOGLESOURCE_URL = 'https://chromium.googlesource.com/'
+GIT_HTTP_URL = 'https://%s' % GIT_HOST
 
 REPO_PROJECT = 'external/repo'
 REPO_URL = '%s/%s' % (GIT_HTTP_URL, REPO_PROJECT)

@@ -26,7 +26,7 @@ class RepositoryTests(cros_test_lib.MoxTestCase):
     """Test we detect external checkouts properly."""
     self.mox.StubOutWithMock(cros_build_lib, 'RunCommand')
     tests = [
-        'http//git.chromium.org/chromiumos/manifest.git',
+        'https://chromium.googlesource.com/chromiumos/manifest.git',
         'ssh://gerrit-int.chromium.org:29419/chromeos/manifest.git',
         'test@abcdef.bla.com:39291/bla/manifest.git',
         'test@abcdef.bla.com:39291/bla/manifest',
