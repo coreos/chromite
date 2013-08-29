@@ -359,7 +359,7 @@ _settings = dict(
   upload_symbols=False,
 
 # manifest_repo_url -- git repository URL for our manifests.
-#   External: https://git.chromium.org/git/chromiumos/manifest
+#   External: https://chromium.googlesource.com/chromiumos/manifest
 #   Internal: ssh://gerrit-int.chromium.org:29419/chromeos/manifest-internal
   manifest_repo_url=constants.MANIFEST_URL,
 
