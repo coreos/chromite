@@ -95,7 +95,7 @@ class Crossdev(object):
         target_tuple = toolchain.GetHostTuple()
       # Catch output of crossdev.
       out = cros_build_lib.RunCommand(['crossdev', '--show-target-cfg',
-                                       '--ex-gdb', target_tuple],
+                                       target_tuple],
                 print_cmd=False, redirect_stdout=True).output.splitlines()
       # List of tuples split at the first '=', converted into dict.
       val[target] = dict([x.split('=', 1) for x in out])
