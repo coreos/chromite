@@ -142,10 +142,12 @@ class Cgroup(object):
     if not cls.IsSupported():
       return False
 
-    def _EnsureMounted(mnt, args):
-      if _FileContains('/proc/mounts', [mnt]):
-        return True
+    def _IsReadOnly(mnt):
+      # from sys/mount.h
+      MS_RDONLY = 1
+      return os.statvfs(mnt).f_flag & MS_RDONLY
 
+    def _EnsureMounted(mnt, args):
       # Grab a lock so in the off chance we have multiple programs (like two
       # cros_sdk launched in parallel) running this init logic, we don't end
       # up mounting multiple times.
@@ -153,6 +155,8 @@ class Cgroup(object):
       with locking.FileLock(lock_path, 'cgroup lock') as lock:
         lock.write_lock()
         if _FileContains('/proc/mounts', [mnt]):
+          if _IsReadOnly(mnt):
+            cros_build_lib.SudoRunCommand(['mount', '-o', 'remount,rw', mnt], print_cmd=False)
           return True
 
         # Not all distros mount cgroup_root to sysfs.
