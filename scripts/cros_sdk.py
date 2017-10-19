@@ -77,7 +77,8 @@ def FetchRemoteTarballs(storage_dir, urls):
       # a proxy is involved and may have pushed down the actual header.
       if (header.startswith("HTTP/1.0 200") or
           header.startswith("HTTP/1.1 200") or
-          header.startswith("HTTP/2.0 200")):
+          header.startswith("HTTP/2.0 200") or
+          header.startswith("HTTP/2 200")):
         successful = True
       elif header.lower().startswith("content-length:"):
         content_length = int(header.split(":", 1)[-1].strip())
